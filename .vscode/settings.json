@@ -4,5 +4,12 @@
   "editor.wordWrap": "on",
   "prettier.tabWidth": 2,
   "editor.tabSize": 2,
-  "cSpell.words": ["lucide", "nextjs", "trpc"]
+  "cSpell.words": [
+    "hono",
+    "lucide",
+    "neondatabase",
+    "nextjs",
+    "nocheck",
+    "trpc"
+  ]
 }
