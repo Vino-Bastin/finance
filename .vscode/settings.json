@@ -1,15 +1,16 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true,
-  "editor.wordWrap": "on",
-  "prettier.tabWidth": 2,
-  "editor.tabSize": 2,
-  "cSpell.words": [
-    "hono",
-    "lucide",
-    "neondatabase",
-    "nextjs",
-    "nocheck",
-    "trpc"
-  ]
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "prettier.tabWidth": 2,
+    "editor.tabSize": 4,
+    "cSpell.words": [
+        "hono",
+        "lucide",
+        "neondatabase",
+        "nextjs",
+        "nocheck",
+        "tanstack",
+        "trpc"
+    ]
 }
