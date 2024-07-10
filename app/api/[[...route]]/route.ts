@@ -11,17 +11,17 @@ const app = new Hono().basePath("/api");
 const routes = app.route("/accounts", accounts);
 
 app.onError((error, c) => {
-    if (error instanceof HTTPException) {
-        return error.getResponse();
-    }
+  if (error instanceof HTTPException) {
+    return error.getResponse();
+  }
 
-    return c.json(
-        {
-            ok: false,
-            error: error.message,
-        },
-        500
-    );
+  return c.json(
+    {
+      ok: false,
+      error: error.message,
+    },
+    500
+  );
 });
 
 export const GET = handle(app);
