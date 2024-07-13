@@ -6,6 +6,7 @@ import { Toaster } from "../components/ui/sonner";
 
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NewAccountSheetProvider from "@/providers/newAccountSheetProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <QueryProviders>
+            <NewAccountSheetProvider />
             <Toaster />
             {children}
           </QueryProviders>

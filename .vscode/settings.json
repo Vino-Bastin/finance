@@ -6,6 +6,7 @@
   "editor.tabSize": 2,
   "cSpell.words": [
     "hono",
+    "hookform",
     "lucide",
     "neondatabase",
     "nextjs",
@@ -13,6 +14,7 @@
     "paralleldrive",
     "sonner",
     "tanstack",
-    "trpc"
+    "trpc",
+    "zustand"
   ]
 }
