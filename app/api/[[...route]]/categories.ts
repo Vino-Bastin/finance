@@ -7,7 +7,7 @@ import { zValidator } from "@hono/zod-validator";
 import { createId } from "@paralleldrive/cuid2";
 
 import { db } from "@/db/drizzle";
-import { accounts, insertAccountSchema } from "@/db/schema";
+import { categories, insertCategorySchema } from "@/db/schema";
 
 const accountsRouter = new Hono<{ Variables: { userId: string } }>()
   .use(clerkMiddleware())
@@ -27,14 +27,14 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
   })
   .get("/", async (c) => {
     const userId = c.get("userId");
-    const accountsData = await db
+    const categoriesData = await db
       .select({
-        id: accounts.id,
-        name: accounts.name,
+        id: categories.id,
+        name: categories.name,
       })
-      .from(accounts)
-      .where(eq(accounts.userId, userId));
-    return c.json({ ok: true, accounts: accountsData });
+      .from(categories)
+      .where(eq(categories.userId, userId));
+    return c.json({ ok: true, categories: categoriesData });
   })
   .get(
     "/:id",
@@ -57,15 +57,15 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
         });
       }
 
-      const [account] = await db
+      const [category] = await db
         .select({
-          id: accounts.id,
-          name: accounts.name,
+          id: categories.id,
+          name: categories.name,
         })
-        .from(accounts)
-        .where(and(eq(accounts.userId, userId), eq(accounts.id, id)));
+        .from(categories)
+        .where(and(eq(categories.userId, userId), eq(categories.id, id)));
 
-      if (!account) {
+      if (!category) {
         throw new HTTPException(404, {
           res: c.json({
             ok: false,
@@ -74,32 +74,32 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
         });
       }
 
-      return c.json({ ok: true, account });
+      return c.json({ ok: true, category });
     }
   )
   .post(
     "/",
     zValidator(
       "json",
-      insertAccountSchema.pick({
+      insertCategorySchema.pick({
         name: true,
       })
     ),
     async (c) => {
       const userId = c.get("userId");
       const { name } = c.req.valid("json");
-      const [newAccount] = await db
-        .insert(accounts)
+      const [newCategory] = await db
+        .insert(categories)
         .values({
           name,
           userId: userId,
           id: createId(),
         })
         .returning({
-          name: accounts.name,
-          id: accounts.id,
+          name: categories.name,
+          id: categories.id,
         });
-      return c.json({ ok: true, account: newAccount });
+      return c.json({ ok: true, category: newCategory });
     }
   )
   .post(
@@ -114,8 +114,8 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
       const userId = c.get("userId");
       const { ids } = c.req.valid("json");
       await db
-        .delete(accounts)
-        .where(and(eq(accounts.userId, userId), inArray(accounts.id, ids)));
+        .delete(categories)
+        .where(and(eq(categories.userId, userId), inArray(categories.id, ids)));
       return c.json({ ok: true });
     }
   )
@@ -129,7 +129,7 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
     ),
     zValidator(
       "json",
-      insertAccountSchema.pick({
+      insertCategorySchema.pick({
         name: true,
       })
     ),
@@ -147,18 +147,18 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
         });
       }
 
-      const [updatedAccount] = await db
-        .update(accounts)
+      const [updatedCategory] = await db
+        .update(categories)
         .set({
           name,
         })
-        .where(and(eq(accounts.userId, userId), eq(accounts.id, id)))
+        .where(and(eq(categories.userId, userId), eq(categories.id, id)))
         .returning({
-          id: accounts.id,
-          name: accounts.name,
+          id: categories.id,
+          name: categories.name,
         });
 
-      if (!updatedAccount) {
+      if (!updatedCategory) {
         throw new HTTPException(404, {
           res: c.json({
             ok: false,
@@ -167,7 +167,7 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
         });
       }
 
-      return c.json({ ok: true, account: updatedAccount });
+      return c.json({ ok: true, category: updatedCategory });
     }
   )
   .delete(
@@ -192,8 +192,8 @@ const accountsRouter = new Hono<{ Variables: { userId: string } }>()
       }
 
       await db
-        .delete(accounts)
-        .where(and(eq(accounts.userId, userId), eq(accounts.id, id)));
+        .delete(categories)
+        .where(and(eq(categories.userId, userId), eq(categories.id, id)));
 
       return c.json({ ok: true });
     }

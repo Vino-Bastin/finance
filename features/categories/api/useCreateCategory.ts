@@ -4,37 +4,37 @@ import { toast } from "sonner";
 
 import honoClient from "@/lib/hono";
 
-export type CreateAccountRequest = InferRequestType<
-  typeof honoClient.api.accounts.$post
+export type CreateCategoryRequest = InferRequestType<
+  typeof honoClient.api.categories.$post
 >["json"];
 
-export type CreateAccountResponse = InferResponseType<
-  typeof honoClient.api.accounts.$post
+export type CreateCategoryResponse = InferResponseType<
+  typeof honoClient.api.categories.$post
 >;
 
-const useCreateAccount = () => {
+const useCreateCategory = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation<
-    CreateAccountResponse,
+    CreateCategoryResponse,
     Error,
-    CreateAccountRequest
+    CreateCategoryRequest
   >({
     mutationFn: async (json) => {
-      const response = await honoClient.api.accounts.$post({ json });
+      const response = await honoClient.api.categories.$post({ json });
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Account created");
+      toast.success("Category created successfully");
       queryClient.invalidateQueries({
-        queryKey: ["accounts"],
+        queryKey: ["categories"],
       });
     },
     onError: (error) => {
       console.error(error);
-      toast.error("Failed to create account");
+      toast.error("Failed to create category");
     },
   });
   return mutation;
 };
 
-export default useCreateAccount;
+export default useCreateCategory;

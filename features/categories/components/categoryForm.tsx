@@ -3,7 +3,7 @@ import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { insertAccountSchema } from "@/db/schema";
+import { insertCategorySchema } from "@/db/schema";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -13,36 +13,35 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 
-const accountFormSchema = insertAccountSchema.pick({
+const categoryFormSchema = insertCategorySchema.pick({
   name: true,
 });
 
-export type AccountFormType = z.input<typeof accountFormSchema>;
+export type CategoryFormType = z.input<typeof categoryFormSchema>;
 
 type Props = {
   id?: string;
-  defaultValues?: AccountFormType;
-  onSubmit: (values: AccountFormType) => void;
+  defaultValues?: CategoryFormType;
+  onSubmit: (values: CategoryFormType) => void;
   onDelete?: () => void;
   disabled?: boolean;
 };
 
-const AccountForm = ({
+const CategoryForm = ({
   id,
   defaultValues,
   onSubmit,
   onDelete,
   disabled,
 }: Props) => {
-  const form = useForm<AccountFormType>({
-    resolver: zodResolver(accountFormSchema),
+  const form = useForm<CategoryFormType>({
+    resolver: zodResolver(categoryFormSchema),
     defaultValues,
   });
 
-  const handleSubmit = (values: AccountFormType) => onSubmit(values);
+  const handleSubmit = (values: CategoryFormType) => onSubmit(values);
   const handleDelete = () => onDelete?.();
 
   return (
@@ -60,7 +59,7 @@ const AccountForm = ({
               <FormControl>
                 <Input
                   disabled={disabled}
-                  placeholder="e.g. Cash, Bank Account, Credit Card"
+                  placeholder="e.g. food, electronics, etc."
                   {...field}
                 />
               </FormControl>
@@ -68,7 +67,7 @@ const AccountForm = ({
           )}
         />
         <Button className="w-full" disabled={disabled}>
-          {id ? "Save Changes" : "Create Account"}
+          {id ? "Save Changes" : "Create Category"}
         </Button>
         {!!id && (
           <Button
@@ -79,7 +78,7 @@ const AccountForm = ({
             variant="outline"
           >
             <Trash className="size-4" />
-            Delete Account
+            Delete Category
           </Button>
         )}
       </form>
@@ -87,4 +86,4 @@ const AccountForm = ({
   );
 };
 
-export default AccountForm;
+export default CategoryForm;

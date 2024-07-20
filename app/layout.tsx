@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import QueryProviders from "../providers/queryProviders";
-import { Toaster } from "../components/ui/sonner";
-
-import { Inter } from "next/font/google";
-import "./globals.css";
+import QueryProviders from "@/providers/queryProviders";
 import NewAccountSheetProvider from "@/providers/newAccountSheetProvider";
+import NewCategorySheetProvider from "@/providers/newCategorySheetProvider";
 
+import { Toaster } from "@/components/ui/sonner";
+
+import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -26,6 +27,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <QueryProviders>
             <NewAccountSheetProvider />
+            <NewCategorySheetProvider />
             <Toaster />
             {children}
           </QueryProviders>

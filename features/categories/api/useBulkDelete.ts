@@ -5,34 +5,34 @@ import { toast } from "sonner";
 import honoClient from "@/lib/hono";
 
 export type BulkDeleteRequest = InferRequestType<
-  (typeof honoClient.api.accounts)["bulk-delete"]["$post"]
+  (typeof honoClient.api.categories)["bulk-delete"]["$post"]
 >["json"];
 
 export type BulkDeleteResponse = InferResponseType<
-  (typeof honoClient.api.accounts)["bulk-delete"]["$post"]
+  (typeof honoClient.api.categories)["bulk-delete"]["$post"]
 >;
 
-const useBulkDeleteAccount = () => {
+const useBulkDeleteCategories = () => {
   const queryClient = useQueryClient();
   const mutation = useMutation<BulkDeleteResponse, Error, BulkDeleteRequest>({
     mutationFn: async (json) => {
-      const response = await honoClient.api.accounts["bulk-delete"].$post({
+      const response = await honoClient.api.categories["bulk-delete"].$post({
         json,
       });
       return await response.json();
     },
     onSuccess: () => {
-      toast.success("Accounts Deleted");
+      toast.success("Categories deleted successfully");
       queryClient.invalidateQueries({
-        queryKey: ["accounts"],
+        queryKey: ["categories"],
       });
     },
     onError: (error) => {
       console.error(error);
-      toast.error("Failed to delete accounts");
+      toast.error("Failed to delete categories");
     },
   });
   return mutation;
 };
 
-export default useBulkDeleteAccount;
+export default useBulkDeleteCategories;

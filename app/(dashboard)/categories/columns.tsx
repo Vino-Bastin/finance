@@ -6,16 +6,16 @@ import { ArrowUpDown } from "lucide-react";
 
 import honoClient from "@/lib/hono";
 
-import Actions from "@/app/(dashboard)/accounts/actions";
+import Actions from "@/app/(dashboard)/categories/actions";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export type AccountsResponseType = InferResponseType<
-  typeof honoClient.api.accounts.$get,
+export type CategoriesResponseType = InferResponseType<
+  typeof honoClient.api.categories.$get,
   200
->["accounts"][0];
+>["categories"][0];
 
-export const columns: ColumnDef<AccountsResponseType>[] = [
+export const columns: ColumnDef<CategoriesResponseType>[] = [
   {
     id: "select",
     header: ({ table }) => (
