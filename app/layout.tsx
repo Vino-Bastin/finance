@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
 import QueryProviders from "@/providers/queryProviders";
-import NewAccountSheetProvider from "@/providers/newAccountSheetProvider";
-import NewCategorySheetProvider from "@/providers/newCategorySheetProvider";
+import SheetProvider from "@/providers/sheetProvider";
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -26,8 +25,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <QueryProviders>
-            <NewAccountSheetProvider />
-            <NewCategorySheetProvider />
+            <SheetProvider />
             <Toaster />
             {children}
           </QueryProviders>
